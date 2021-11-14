@@ -1,34 +1,31 @@
 <template>
   <div id="app">
+    <div class="container">
+      <site-navigation class="block" />
+      <router-view />
+    </div>
   </div>
 </template>
 
 <script>
+import SiteNavigation from './components/SiteNavigation.vue';
 
 export default {
-  name: "App",
-  components: {
-    Form,
-  },
+  name: 'App',
+  components: { SiteNavigation },
 };
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  color: #2c3e50;
-  background-color: #fafafa;
-  padding: 24px;
-  box-sizing: border-box;
+html {
+  overflow-y: auto;
 }
-
-html,
-body,
 #app {
-  height: 100%;
+  min-height: 100vh;
 }
-
-* {
-  box-sizing: border-box;
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
 }
 </style>
