@@ -2,16 +2,26 @@
   <div class="cart">
     <div class="box card-grid"></div>
     <div class="box">
-      <h2 class="title is-3">Итого: 5000</h2>
+      <h2 class="title is-3">Итого: {{ totalSum }}&#8381;</h2>
       <hr />
-      <button class="button is-success" type="button">Оформить</button>
+      <button
+        :disabled="!cart.length"
+        class="button is-success"
+        type="button"
+        @click="submit"
+      >
+        Оформить
+      </button>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'Cart',
+  computed: { ...mapGetters({ cart: 'getCart', totalSum: 'getTotalSum' }) },
 };
 </script>
 
