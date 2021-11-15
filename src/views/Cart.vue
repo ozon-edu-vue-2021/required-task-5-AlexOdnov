@@ -1,6 +1,13 @@
 <template>
   <div class="cart">
-    <div class="box card-grid"></div>
+    <div class="box card-grid">
+      <product-card
+        v-for="product in cart"
+        :key="product.id"
+        :product="product"
+      />
+      <p v-if="!cart.length">Корзина пуста</p>
+    </div>
     <div class="box">
       <h2 class="title is-3">Итого: {{ totalSum }}&#8381;</h2>
       <hr />
@@ -18,9 +25,13 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import ProductCard from '../components/ProductCard.vue';
 
 export default {
   name: 'Cart',
+  components: {
+    ProductCard,
+  },
   computed: { ...mapGetters({ cart: 'getCart', totalSum: 'getTotalSum' }) },
 };
 </script>
