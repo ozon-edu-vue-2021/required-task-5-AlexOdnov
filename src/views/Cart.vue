@@ -26,6 +26,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import ProductCard from '../components/ProductCard.vue';
+import Swal from 'sweetalert2';
 
 export default {
   name: 'Cart',
@@ -33,6 +34,14 @@ export default {
     ProductCard,
   },
   computed: { ...mapGetters({ cart: 'getCart', totalSum: 'getTotalSum' }) },
+  methods: {
+    submit() {
+      const list = this.cart
+        .map((el) => `<p class="is-size-4">${el.dish}</p>`)
+        .join('');
+      Swal.fire({ html: list, scrollbarPadding: false });
+    },
+  },
 };
 </script>
 

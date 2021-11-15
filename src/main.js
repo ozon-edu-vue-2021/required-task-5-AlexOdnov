@@ -3,6 +3,7 @@ import Vue from 'vue';
 import App from './App.vue';
 import store from './store';
 import router from './router';
+import '@sweetalert2/theme-bulma/bulma.css';
 
 Vue.config.productionTip = false;
 
