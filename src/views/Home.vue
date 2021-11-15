@@ -9,15 +9,24 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import ProductCard from '../components/ProductCard.vue';
+import { useStore } from 'vuex-simple';
 
 export default {
   name: 'Home',
   components: {
     ProductCard,
   },
-  computed: { ...mapState(['products']) },
+  data() {
+    return {
+      store: useStore(this.$store),
+    };
+  },
+  computed: {
+    products() {
+      return this.store.products;
+    },
+  },
 };
 </script>
 

@@ -10,15 +10,24 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import ProductCard from '../components/ProductCard.vue';
+import { useStore } from 'vuex-simple';
 
 export default {
   name: 'Favorites',
   components: {
     ProductCard,
   },
-  computed: { ...mapState(['favorites']) },
+  data() {
+    return {
+      store: useStore(this.$store),
+    };
+  },
+  computed: {
+    favorites() {
+      return this.store.favorites;
+    },
+  },
 };
 </script>
 

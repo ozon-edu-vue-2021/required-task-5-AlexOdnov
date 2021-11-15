@@ -24,16 +24,28 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 import ProductCard from '../components/ProductCard.vue';
 import Swal from 'sweetalert2';
+import { useStore } from 'vuex-simple';
 
 export default {
   name: 'Cart',
   components: {
     ProductCard,
   },
-  computed: { ...mapGetters({ cart: 'getCart', totalSum: 'getTotalSum' }) },
+  data() {
+    return {
+      store: useStore(this.$store),
+    };
+  },
+  computed: {
+    cart() {
+      return this.store.getCart;
+    },
+    totalSum() {
+      return this.store.getTotalSum;
+    },
+  },
   methods: {
     submit() {
       const list = this.cart

@@ -9,16 +9,18 @@
 
 <script>
 import SiteNavigation from './components/SiteNavigation.vue';
-import { mapActions } from 'vuex';
+import { useStore } from 'vuex-simple';
 
 export default {
   name: 'App',
   components: { SiteNavigation },
-  created() {
-    this.init();
+  data() {
+    return {
+      store: useStore(this.$store),
+    };
   },
-  methods: {
-    ...mapActions(['init']),
+  created() {
+    this.store.init();
   },
 };
 </script>

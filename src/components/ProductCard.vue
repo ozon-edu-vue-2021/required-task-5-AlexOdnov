@@ -21,7 +21,7 @@
           v-if="!isProductInCart"
           class="button is-success"
           type="button"
-          @click="addToCart(product.id)"
+          @click="addToCart"
         >
           Купить
         </button>
@@ -29,7 +29,7 @@
           v-else
           class="button is-danger"
           type="button"
-          @click="removeFromCart(product.id)"
+          @click="removeFromCart"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -47,7 +47,7 @@
           v-if="!isProductInFavorites"
           class="button is-info"
           type="button"
-          @click="addToFavorites(product.id)"
+          @click="addToFavorites"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -65,7 +65,7 @@
           v-else
           class="button is-danger"
           type="button"
-          @click="removeFromFavorites(product.id)"
+          @click="removeFromFavorites"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -82,7 +82,7 @@
         <number-input
           v-if="isProductInCart"
           :value="productCount"
-          @input="setProductCount({ id: product.id, count: $event })"
+          @input="setProductCount"
         />
       </div>
     </div>
@@ -90,8 +90,8 @@
 </template>
 
 <script>
-import { mapMutations, mapActions } from 'vuex';
 import NumberInput from './NumberInput.vue';
+import { useStore } from 'vuex-simple';
 
 export default {
   name: 'ProductCard',
@@ -104,25 +104,38 @@ export default {
       required: true,
     },
   },
+  data() {
+    return {
+      store: useStore(this.$store),
+    };
+  },
   computed: {
     isProductInFavorites() {
-      return this.$store.getters.isProductInFavorites(this.product.id);
+      return this.store.isProductInFavorites(this.product.id);
     },
     isProductInCart() {
-      return this.$store.getters.isProductInCart(this.product.id);
+      return this.store.isProductInCart(this.product.id);
     },
     productCount() {
-      return this.$store.getters.getProductCount(this.product.id);
+      return this.store.getProductCount(this.product.id);
     },
   },
   methods: {
-    ...mapMutations([
-      'addToCart',
-      'removeFromCart',
-      'addToFavorites',
-      'removeFromFavorites',
-    ]),
-    ...mapActions(['setProductCount']),
+    addToCart() {
+      this.store.addToCart(this.product.id);
+    },
+    removeFromCart() {
+      this.store.removeFromCart(this.product.id);
+    },
+    addToFavorites() {
+      this.store.addToFavorites(this.product.id);
+    },
+    removeFromFavorites() {
+      this.store.removeFromFavorites(this.product.id);
+    },
+    setProductCount(e) {
+      this.store.setProductCount({ id: this.product.id, count: e });
+    },
   },
 };
 </script>
