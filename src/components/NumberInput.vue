@@ -38,40 +38,43 @@
 
 <script>
 import { debounce } from '../helpers/debounce';
+import { Vue, Component, Prop, Emit, Watch } from 'vue-property-decorator';
 
-export default {
+@Component({
   name: 'NumberInput',
-  props: {
-    value: {
-      type: Number,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      innerValue: this.value,
-    };
-  },
-  watch: {
-    innerValue(newVal) {
-      const numberValue = parseInt(newVal) || 0;
-      const value = numberValue > 0 ? numberValue : 0;
-      this.innerValue = value;
-      this.onInput(value);
-    },
-  },
-  methods: {
-    decrease() {
-      this.innerValue--;
-    },
-    increase() {
-      this.innerValue++;
-    },
-    onInput: debounce(function (value) {
-      this.$emit('input', value);
-    }, 200),
-  },
-};
+})
+export default class NumberInput extends Vue {
+  @Prop(Number) value;
+
+  innerValue = 0;
+
+  @Watch('innerValue')
+  onInnerValueChanged(newVal) {
+    const numberValue = parseInt(newVal) || 0;
+    const value = numberValue > 0 ? numberValue : 0;
+    this.innerValue = value;
+    this.onInput(value);
+  }
+
+  decrease() {
+    this.innerValue--;
+  }
+  increase() {
+    this.innerValue++;
+  }
+  onInput = debounce(function (value) {
+    this.input(value);
+  }, 200);
+
+  @Emit()
+  input(value) {
+    return value;
+  }
+
+  created() {
+    this.innerValue = this.value;
+  }
+}
 </script>
 
 <style scoped>

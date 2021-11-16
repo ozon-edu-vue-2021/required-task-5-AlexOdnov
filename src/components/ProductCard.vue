@@ -92,52 +92,45 @@
 <script>
 import NumberInput from './NumberInput.vue';
 import { useStore } from 'vuex-simple';
+import { Vue, Component, Prop } from 'vue-property-decorator';
 
-export default {
+@Component({
   name: 'ProductCard',
   components: {
     NumberInput,
   },
-  props: {
-    product: {
-      type: Object,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      store: useStore(this.$store),
-    };
-  },
-  computed: {
-    isProductInFavorites() {
-      return this.store.isProductInFavorites(this.product.id);
-    },
-    isProductInCart() {
-      return this.store.isProductInCart(this.product.id);
-    },
-    productCount() {
-      return this.store.getProductCount(this.product.id);
-    },
-  },
-  methods: {
-    addToCart() {
-      this.store.addToCart(this.product.id);
-    },
-    removeFromCart() {
-      this.store.removeFromCart(this.product.id);
-    },
-    addToFavorites() {
-      this.store.addToFavorites(this.product.id);
-    },
-    removeFromFavorites() {
-      this.store.removeFromFavorites(this.product.id);
-    },
-    setProductCount(e) {
-      this.store.setProductCount({ id: this.product.id, count: e });
-    },
-  },
-};
+})
+export default class ProductCard extends Vue {
+  @Prop(Object) product;
+
+  store = useStore(this.$store);
+
+  get isProductInFavorites() {
+    return this.store.isProductInFavorites(this.product.id);
+  }
+  get isProductInCart() {
+    return this.store.isProductInCart(this.product.id);
+  }
+  get productCount() {
+    return this.store.getProductCount(this.product.id);
+  }
+
+  addToCart() {
+    this.store.addToCart(this.product.id);
+  }
+  removeFromCart() {
+    this.store.removeFromCart(this.product.id);
+  }
+  addToFavorites() {
+    this.store.addToFavorites(this.product.id);
+  }
+  removeFromFavorites() {
+    this.store.removeFromFavorites(this.product.id);
+  }
+  setProductCount(e) {
+    this.store.setProductCount({ id: this.product.id, count: e });
+  }
+}
 </script>
 
 <style scoped>

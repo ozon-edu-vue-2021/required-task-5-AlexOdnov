@@ -27,34 +27,31 @@
 import ProductCard from '../components/ProductCard.vue';
 import Swal from 'sweetalert2';
 import { useStore } from 'vuex-simple';
+import { Vue, Component } from 'vue-property-decorator';
 
-export default {
+@Component({
   name: 'Cart',
   components: {
     ProductCard,
   },
-  data() {
-    return {
-      store: useStore(this.$store),
-    };
-  },
-  computed: {
-    cart() {
-      return this.store.getCart;
-    },
-    totalSum() {
-      return this.store.getTotalSum;
-    },
-  },
-  methods: {
-    submit() {
-      const list = this.cart
-        .map((el) => `<p class="is-size-4">${el.dish}</p>`)
-        .join('');
-      Swal.fire({ html: list, scrollbarPadding: false });
-    },
-  },
-};
+})
+export default class Cart extends Vue {
+  store = useStore(this.$store);
+
+  get cart() {
+    return this.store.getCart;
+  }
+  get totalSum() {
+    return this.store.getTotalSum;
+  }
+
+  submit() {
+    const list = this.cart
+      .map((el) => `<p class="is-size-4">${el.dish}</p>`)
+      .join('');
+    Swal.fire({ html: list, scrollbarPadding: false });
+  }
+}
 </script>
 
 <style scoped>

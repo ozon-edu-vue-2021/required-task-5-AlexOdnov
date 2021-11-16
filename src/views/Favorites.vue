@@ -12,23 +12,21 @@
 <script>
 import ProductCard from '../components/ProductCard.vue';
 import { useStore } from 'vuex-simple';
+import { Vue, Component } from 'vue-property-decorator';
 
-export default {
+@Component({
   name: 'Favorites',
   components: {
     ProductCard,
   },
-  data() {
-    return {
-      store: useStore(this.$store),
-    };
-  },
-  computed: {
-    favorites() {
-      return this.store.favorites;
-    },
-  },
-};
+})
+export default class Favorites extends Vue {
+  store = useStore(this.$store);
+
+  get favorites() {
+    return this.store.favorites;
+  }
+}
 </script>
 
 <style></style>

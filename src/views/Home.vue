@@ -11,23 +11,21 @@
 <script>
 import ProductCard from '../components/ProductCard.vue';
 import { useStore } from 'vuex-simple';
+import { Vue, Component } from 'vue-property-decorator';
 
-export default {
+@Component({
   name: 'Home',
   components: {
     ProductCard,
   },
-  data() {
-    return {
-      store: useStore(this.$store),
-    };
-  },
-  computed: {
-    products() {
-      return this.store.products;
-    },
-  },
-};
+})
+export default class Home extends Vue {
+  store = useStore(this.$store);
+
+  get products() {
+    return this.store.products;
+  }
+}
 </script>
 
 <style></style>

@@ -10,19 +10,21 @@
 <script>
 import SiteNavigation from './components/SiteNavigation.vue';
 import { useStore } from 'vuex-simple';
+import { Vue, Component } from 'vue-property-decorator';
 
-export default {
+@Component({
   name: 'App',
-  components: { SiteNavigation },
-  data() {
-    return {
-      store: useStore(this.$store),
-    };
+  components: {
+    SiteNavigation,
   },
+})
+export default class App extends Vue {
+  store = useStore(this.$store);
+
   created() {
     this.store.init();
-  },
-};
+  }
+}
 </script>
 
 <style>

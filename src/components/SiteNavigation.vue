@@ -15,9 +15,12 @@
 </template>
 
 <script>
-export default {
+import { Vue, Component } from 'vue-property-decorator';
+
+@Component({
   name: 'SiteNavigation',
-};
+})
+export default class SiteNavigation extends Vue {}
 </script>
 
 <style scoped>
